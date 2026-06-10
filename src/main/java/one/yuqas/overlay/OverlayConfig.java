@@ -18,14 +18,10 @@ import java.awt.Color;
 
 public class OverlayConfig implements ModMenuApi {
 
-    private static final int DEFAULT_FILL_ALPHA = 121;
-    private static final int DEFAULT_LINE_ALPHA = 255;
 
     @SerialEntry public static boolean enabled = true;
-    @SerialEntry public static Color fillColor = new Color(0, 208, 255, DEFAULT_FILL_ALPHA);
-    @SerialEntry public static float fillAlpha = DEFAULT_FILL_ALPHA / 255f;
-    @SerialEntry public static Color lineColor = new Color(255, 255, 255, DEFAULT_LINE_ALPHA);
-    @SerialEntry public static float lineAlpha = DEFAULT_LINE_ALPHA / 255f;
+    @SerialEntry public static Color fillColor = new Color(195, 234, 243, 50);
+    @SerialEntry public static Color lineColor = new Color(255, 255, 255, 255);
     @SerialEntry public static boolean showLine = true;
     @SerialEntry public static float lineWidth = 1.0f;
     @SerialEntry public static boolean throughWallsFill = false;
@@ -77,17 +73,8 @@ public class OverlayConfig implements ModMenuApi {
                         .option(Option.<Color>createBuilder()
                                 .name(Component.translatable("blockaccent.config.fillcolor"))
                                 .description(OptionDescription.of(Component.translatable("blockaccent.config.fillcolor.desc")))
-                                .binding(new Color(0, 208, 255, DEFAULT_FILL_ALPHA), () -> fillColor, v -> fillColor = v)
-                                .controller(ColorControllerBuilder::create)
-                                .build())
-                        .option(Option.<Float>createBuilder()
-                                .name(Component.translatable("blockaccent.config.fillalpha"))
-                                .description(OptionDescription.of(Component.translatable("blockaccent.config.fillalpha.desc")))
-                                .binding(DEFAULT_FILL_ALPHA / 255f, () -> fillAlpha, v -> {
-                                    fillAlpha = v;
-                                    fillColor = new Color(fillColor.getRed(), fillColor.getGreen(), fillColor.getBlue(), (int)(v * 255));
-                                })
-                                .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0f, 1f).step(0.01f))
+                                .binding(new Color(195, 234, 243, 50), () -> fillColor, v -> fillColor = v)
+                                .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(true))
                                 .build())
                         .option(Option.<Boolean>createBuilder()
                                 .name(Component.translatable("blockaccent.config.throughwalls.fill"))
@@ -107,17 +94,8 @@ public class OverlayConfig implements ModMenuApi {
                         .option(Option.<Color>createBuilder()
                                 .name(Component.translatable("blockaccent.config.linecolor"))
                                 .description(OptionDescription.of(Component.translatable("blockaccent.config.linecolor.desc")))
-                                .binding(new Color(255, 255, 255, DEFAULT_LINE_ALPHA), () -> lineColor, v -> lineColor = v)
-                                .controller(ColorControllerBuilder::create)
-                                .build())
-                        .option(Option.<Float>createBuilder()
-                                .name(Component.translatable("blockaccent.config.linealpha"))
-                                .description(OptionDescription.of(Component.translatable("blockaccent.config.linealpha.desc")))
-                                .binding(DEFAULT_LINE_ALPHA / 255f, () -> lineAlpha, v -> {
-                                    lineAlpha = v;
-                                    lineColor = new Color(lineColor.getRed(), lineColor.getGreen(), lineColor.getBlue(), (int)(v * 255));
-                                })
-                                .controller(opt -> FloatSliderControllerBuilder.create(opt).range(0f, 1f).step(0.01f))
+                                .binding(new Color(255, 255, 255, 255), () -> lineColor, v -> lineColor = v)
+                                .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(true))
                                 .build())
                         .option(Option.<Float>createBuilder()
                                 .name(Component.translatable("blockaccent.config.linewidth"))
